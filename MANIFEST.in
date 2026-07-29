@@ -1,0 +1,13 @@
+include CITATION.cff
+include CODE_OF_CONDUCT.md
+include CONTRIBUTING.md
+include LICENSE
+include README*.md
+include SKILL.md
+include SECURITY.md
+exclude uv.lock
+prune docs
+prune scripts
+prune tests
+global-exclude __pycache__
+global-exclude *.py[cod]

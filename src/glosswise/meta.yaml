@@ -1,0 +1,210 @@
+manifest_version: 2
+coordinate: glosswise/glosswise
+version: 0.1.0.5
+compatibility: {heavenbase: {min: 0.1.2.1}}
+bundle: glosswise
+items:
+  - kind: entity
+    identifier: glosswise-term
+    name: GlossWiseTerm
+    desc: One language-neutral terminology concept.
+    source: path
+    target: {module: entities, qualname: GlossWiseTerm}
+    active: true
+    meta: {schema_version: 1, version: 0.1.0.5}
+  - kind: entity
+    identifier: glosswise-term-form
+    name: GlossWiseTermForm
+    desc: One independently searchable language-specific term form.
+    source: path
+    target: {module: entities, qualname: GlossWiseTermForm}
+    active: true
+    meta: {schema_version: 1, version: 0.1.0.5}
+  - kind: entity
+    identifier: glosswise-rule
+    name: GlossWiseRule
+    desc: One scoped translation instruction.
+    source: path
+    target: {module: entities, qualname: GlossWiseRule}
+    active: true
+    meta: {schema_version: 1, version: 0.1.0.5}
+  - kind: entity
+    identifier: glosswise-example
+    name: GlossWiseExample
+    desc: One annotated source and target translation pair.
+    source: path
+    target: {module: entities, qualname: GlossWiseExample}
+    active: true
+    meta: {schema_version: 1, version: 0.1.0.5}
+  - kind: extension
+    identifier: glosswise
+    name: GlossWise
+    desc: Professional terminology context for AI translation.
+    source: inline
+    target: definition
+    active: true
+    meta:
+      schema_version: 1
+      version: 0.1.0.5
+      dependencies:
+        - entity:glosswise-term
+        - entity:glosswise-term-form
+        - entity:glosswise-rule
+        - entity:glosswise-example
+      definition:
+        identifier: glosswise
+        name: GlossWise
+        version: 0.1.0.5
+        desc: Professional terminology context for AI translation.
+        required: false
+        requires: []
+        entities:
+          - glosswise-term
+          - glosswise-term-form
+          - glosswise-rule
+          - glosswise-example
+        meta: {}
+        setup: null
+        api: {kind: heavenbase.executable, version: 1, source: path, target: {module: service, qualname: GlossWiseService}}
+        api_name: glosswise
+  - kind: toolkit_family
+    identifier: glosswise
+    name: GlossWise
+    desc: Terminology, translation-context, and curator tools.
+    source: inline
+    target: definition
+    active: true
+    meta:
+      schema_version: 1
+      version: 0.1.0.5
+      dependencies: [extension:glosswise]
+      workspace_requires: [glosswise, toolkit]
+      definition:
+        tool_names:
+          - glosswise_workspace_info
+          - glosswise_prepare_translation
+          - glosswise_prepare_file
+          - glosswise_search_terms
+          - glosswise_search_rules
+          - glosswise_scan_text
+          - glosswise_scan_file
+          - glosswise_ocr_pdf
+          - glosswise_list_documents
+          - glosswise_get_document
+          - glosswise_read_document
+          - glosswise_remove_document
+          - glosswise_search_examples
+          - glosswise_list_records
+          - glosswise_get_record
+          - glosswise_put_term
+          - glosswise_put_rule
+          - glosswise_put_example
+          - glosswise_archive
+        builder: {kind: heavenbase.executable, version: 1, source: path, target: {module: mcp.factory, qualname: glosswise_tool_functions}}
+        meta: {builder_context: workspace_tool_context}
+  - kind: mcp_profile
+    identifier: glosswise
+    name: GlossWise
+    desc: Safe text and search surface for translation agents.
+    source: inline
+    target: definition
+    active: true
+    meta:
+      schema_version: 1
+      version: 0.1.0.5
+      workspace_requires: [glosswise, toolkit, agent]
+      dependencies:
+        - serializer:jstr
+        - toolkit_family:glosswise
+        - toolkit_family:agent
+        - entity:glosswise-term
+        - entity:glosswise-term-form
+        - entity:glosswise-rule
+        - entity:glosswise-example
+      definition:
+        extends: []
+        tools:
+          - glosswise_workspace_info
+          - glosswise_prepare_translation
+          - glosswise_search_terms
+          - glosswise_search_rules
+          - glosswise_scan_text
+          - glosswise_search_examples
+          - list_skills
+          - read_skill
+        entities:
+          - glosswise-term
+          - glosswise-term-form
+          - glosswise-rule
+          - glosswise-example
+        skills: [glosswise]
+        serializer: jstr
+        desc: Safe text and search surface for translation agents.
+        meta: {}
+  - kind: mcp_profile
+    identifier: glosswise-local
+    name: GlossWise Local
+    desc: GlossWise plus authorized text ranges and PDF OCR.
+    source: inline
+    target: definition
+    active: true
+    meta:
+      schema_version: 1
+      version: 0.1.0.5
+      workspace_requires: [glosswise, toolkit, agent]
+      dependencies:
+        - mcp_profile:glosswise
+        - serializer:jstr
+        - toolkit_family:glosswise
+      definition:
+        extends: [glosswise]
+        tools:
+          - glosswise_scan_file
+          - glosswise_prepare_file
+          - glosswise_ocr_pdf
+          - glosswise_list_documents
+          - glosswise_get_document
+          - glosswise_read_document
+          - glosswise_remove_document
+        entities:
+          - glosswise-term
+          - glosswise-term-form
+          - glosswise-rule
+          - glosswise-example
+        skills: [glosswise]
+        serializer: jstr
+        desc: GlossWise plus authorized text ranges and PDF OCR.
+        meta: {}
+  - kind: mcp_profile
+    identifier: glosswise-curator
+    name: GlossWise Curator
+    desc: GlossWise retrieval plus domain-validated curation.
+    source: inline
+    target: definition
+    active: true
+    meta:
+      schema_version: 1
+      version: 0.1.0.5
+      workspace_requires: [glosswise, toolkit, agent]
+      dependencies:
+        - mcp_profile:glosswise
+        - serializer:jstr
+        - toolkit_family:glosswise
+      definition:
+        extends: [glosswise]
+        tools:
+          - glosswise_list_records
+          - glosswise_get_record
+          - glosswise_put_term
+          - glosswise_put_rule
+          - glosswise_put_example
+          - glosswise_archive
+        entities:
+          - glosswise-term
+          - glosswise-term-form
+          - glosswise-rule
+          - glosswise-example
+        skills: [glosswise]
+        serializer: jstr
+        desc: GlossWise retrieval plus domain-validated curation.
+        meta: {}

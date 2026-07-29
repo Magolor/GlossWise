@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "glosswise"
+version = "0.1.0.5"
+description = "Terminology-safe translation context for AI agents, powered by HeavenBase."
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+license = "MIT"
+authors = [{name = "Magolor"}]
+keywords = [
+  "agents",
+  "glossary",
+  "mcp",
+  "terminology",
+  "translation",
+]
+dependencies = [
+  "heavenbase>=0.1.2.1",
+  "langcodes>=3.4,<4",
+  "pillow>=10,<13",
+  "pypdfium2>=4.30,<6",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Text Processing :: Linguistic",
+]
+
+[project.urls]
+Homepage = "https://github.com/Magolor/GlossWise"
+Documentation = "https://github.com/Magolor/GlossWise#readme"
+Issues = "https://github.com/Magolor/GlossWise/issues"
+Repository = "https://github.com/Magolor/GlossWise.git"
+
+[project.optional-dependencies]
+dev = [
+  "black>=24,<27",
+  "build>=1.2,<2",
+  "flake8>=7,<8",
+  "pre-commit>=4,<5",
+  "pytest>=8,<10",
+  "pyyaml>=6,<7",
+]
+
+[project.scripts]
+glosswise = "glosswise.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+glosswise = ["meta.yaml", "skills/*/SKILL.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["--strict-markers", "-m", "fast and not full"]
+markers = [
+  "fast: deterministic offline tests for the daily suite",
+  "full: release-gate tests that build or launch isolated artifacts",
+  "provider: tests allowed to call a real embedding provider",
+]
+
+[tool.black]
+line-length = 160
+target-version = ["py310"]
+
+[tool.flake8]
+max-line-length = 160
+extend-ignore = ["E203", "W503"]

@@ -1,0 +1,16 @@
+repos:
+  - repo: local
+    hooks:
+      - id: sync-root-skill
+        name: Sync public GlossWise Skill
+        entry: python scripts/sync-skill.py
+        language: python
+        pass_filenames: false
+        files: ^(SKILL\.md|src/glosswise/skills/glosswise/SKILL\.md|scripts/sync-skill\.py)$
+
+      - id: sync-readme
+        name: Sync canonical English README
+        entry: bash scripts/sync-readme.bash
+        language: system
+        pass_filenames: false
+        files: ^(README(\.en)?\.md|scripts/sync-readme\.bash)$

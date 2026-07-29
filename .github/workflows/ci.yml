@@ -1,0 +1,28 @@
+name: Continuous integration
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.0.0
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v9.0.0
+        with:
+          enable-cache: true
+      - run: uv sync --extra dev --locked
+      - run: bash scripts/flake.bash --ci
+      - run: bash scripts/test.bash
+      - run: bash scripts/test.bash -m full
+      - run: uv build

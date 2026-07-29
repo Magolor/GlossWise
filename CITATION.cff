@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: If you use GlossWise, please cite it using this metadata.
+title: GlossWise
+type: software
+authors:
+  - family-names: Magolor
+abstract: Terminology-safe translation context for AI agents, powered by HeavenBase.
+version: 0.1.0.5
+date-released: 2026-07-28
+repository-code: https://github.com/Magolor/GlossWise
+url: https://github.com/Magolor/GlossWise
+license: MIT
+keywords:
+  - agent
+  - glossary
+  - MCP
+  - terminology
+  - translation

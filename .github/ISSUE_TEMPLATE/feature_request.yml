@@ -1,0 +1,36 @@
+name: Feature request
+description: Propose a focused user or developer improvement.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What workflow is difficult or impossible today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the smallest public behavior that would solve the problem.
+    validations:
+      required: true
+  - type: dropdown
+    id: interface
+    attributes:
+      label: Primary interface
+      options:
+        - CLI
+        - MCP
+        - Python SDK
+        - HeavenBase extension
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

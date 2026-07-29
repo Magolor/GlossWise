@@ -1,0 +1,61 @@
+name: Bug report
+description: Report reproducible incorrect behavior.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thank you for helping improve GlossWise. Do not include secrets or sensitive source text.
+  - type: input
+    id: version
+    attributes:
+      label: GlossWise version
+      placeholder: "0.1.0.4"
+    validations:
+      required: true
+  - type: input
+    id: heavenbase
+    attributes:
+      label: HeavenBase version
+      placeholder: "0.1.2.1"
+    validations:
+      required: true
+  - type: dropdown
+    id: interface
+    attributes:
+      label: Interface
+      options:
+        - CLI
+        - MCP
+        - Python SDK
+        - HeavenBase extension
+        - Packaging or installation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include the smallest safe commands or code that reproduce the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, Python version, and relevant MCP client.
+    validations:
+      required: true
